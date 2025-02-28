@@ -14,7 +14,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages  # 🚀 THÊM DÒNG NÀY
+      name: github-pages
 
     steps:
       - name: Checkout repository
@@ -22,6 +22,15 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      # 🛑 Xóa tất cả artifacts cũ để tránh lỗi
+      - name: Delete old artifacts
+        run: |
+          gh run list --limit 10 --json databaseId | jq -r '.[].databaseId' | while read -r id; do
+            gh run delete "$id" --confirm || true
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload HTML file
         uses: actions/upload-pages-artifact@v3

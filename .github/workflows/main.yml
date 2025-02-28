@@ -3,7 +3,7 @@ name: Deploy Static Site
 on:
   push:
     branches:
-      - main  # Hoặc branch chứa file index.html
+      - main  # Đổi nếu bạn dùng branch khác
 
 permissions:
   contents: read
@@ -13,6 +13,8 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages  # 🚀 THÊM DÒNG NÀY
 
     steps:
       - name: Checkout repository
@@ -24,7 +26,7 @@ jobs:
       - name: Upload HTML file
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .  # Thư mục chứa index.html (gốc repo)
+          path: .  # Nếu `index.html` nằm ở gốc repo
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

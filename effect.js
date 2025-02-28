@@ -45,4 +45,8 @@ function startTyping() {
     }
 }
 
+function goBack() {
+    window.history.back();
+}
+
 startTyping();

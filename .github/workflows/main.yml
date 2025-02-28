@@ -3,7 +3,7 @@ name: Deploy Static Site
 on:
   push:
     branches:
-      - main  # Đổi nếu bạn dùng branch khác
+      - main
 
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # 🛑 Xóa tất cả artifacts cũ để tránh lỗi
+      # 🛑 Xóa các artifacts cũ trước khi upload mới
       - name: Delete old artifacts
         run: |
           gh run list --limit 10 --json databaseId | jq -r '.[].databaseId' | while read -r id; do
@@ -31,11 +31,14 @@ jobs:
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true  # Tránh dừng workflow nếu không có artifacts để xóa
 
-      - name: Upload HTML file
+      # 🛑 Chỉ upload **một** artifact duy nhất
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .  # Nếu `index.html` nằm ở gốc repo
+          name: github-pages  # Đảm bảo không đổi tên
+          path: .  # Nếu file index.html ở thư mục gốc
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

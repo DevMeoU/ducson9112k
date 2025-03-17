@@ -1,7 +1,7 @@
 const texts = [
     "print(\"🤵Hello, I'm Lê Đức Sơn\")", 
     "print(\"⚒️I'm an Embedded Developer\")", 
-    "print(\"🔭 Currently working with C/C++, C#, Python, Script\")", 
+    "print(\"🔭 Currently working with C/C++, C#, Python, Scripting\")", 
     "print(\"📨Contact me: Facebook | Zalo\")",
     "print(\"More about me: Youtube | Github\")",
     "print(\"Loading system... Access Granted!\")"
